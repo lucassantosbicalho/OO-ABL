@@ -57,14 +57,14 @@ CLASS Enterprise.HR.Dept:
 
     END METHOD.
     
-    METHOD PUBLIC VOID AddEmployee(INPUT FirstName     AS CHARACTER,
-                                   INPUT LastName      AS CHARACTER,
-                                   INPUT JobTitle      AS CHARACTER,
-                                   INPUT EmpNum        AS INTEGER,
-                                   INPUT VacationHours AS INTEGER,
-                                   INPUT Address       AS CHARACTER,
-                                   INPUT PostalCode    AS CHARACTER,
-                                   INPUT Phones        AS CHARACTER EXTENT 3):
+    METHOD PUBLIC VOID AddEmployee(INPUT pFirstName     AS CHARACTER,
+                                   INPUT pLastName      AS CHARACTER,
+                                   INPUT pJobTitle      AS CHARACTER,
+                                   INPUT pEmpNum        AS INTEGER,
+                                   INPUT pVacationHours AS INTEGER,
+                                   INPUT pAddress       AS CHARACTER,
+                                   INPUT pPostalCode    AS CHARACTER,
+                                   INPUT pPhones        AS CHARACTER EXTENT 3):
         
         RETURN.
 
@@ -75,8 +75,8 @@ CLASS Enterprise.HR.Dept:
      Notes:
     ------------------------------------------------------------------------------*/
 
-    METHOD PUBLIC Emp GetEmployee(INPUT FirstName     AS CHARACTER,
-                                  INPUT LastName      AS CHARACTER):
+    METHOD PUBLIC Emp GetEmployee(INPUT pFirstName     AS CHARACTER,
+                                  INPUT pLastName      AS CHARACTER):
         
         RETURN ?.
 
