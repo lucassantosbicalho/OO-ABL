@@ -42,9 +42,7 @@ CLASS Enterprise.HR.Emp:
 
     DEFINE PUBLIC PROPERTY PostalCode AS CHARACTER NO-UNDO 
     GET.
-    SET(INPUT arg AS CHARACTER):
-                
-    END SET.
+    SET.
 
     DEFINE PUBLIC PROPERTY Phones AS CHARACTER EXTENT 3 NO-UNDO 
     GET(INPUT idx AS INTEGER):
@@ -70,14 +68,24 @@ CLASS Enterprise.HR.Emp:
      Notes:
     ------------------------------------------------------------------------------*/
 
-    METHOD PUBLIC VOID Initialize(INPUT FirstName     AS CHARACTER,
-                                  INPUT LastName      AS CHARACTER,
-                                  INPUT JobTitle      AS CHARACTER,
-                                  INPUT EmpNum        AS INTEGER,
-                                  INPUT VacationHours AS INTEGER,
-                                  INPUT Address       AS CHARACTER,
-                                  INPUT PostalCode    AS CHARACTER,
-                                  INPUT Phones        AS CHARACTER EXTENT 3):
+    METHOD PUBLIC VOID Initialize(INPUT pFirstName     AS CHARACTER,
+                                  INPUT pLastName      AS CHARACTER,
+                                  INPUT pJobTitle      AS CHARACTER,
+                                  INPUT pEmpNum        AS INTEGER,
+                                  INPUT pVacationHours AS INTEGER,
+                                  INPUT pAddress       AS CHARACTER,
+                                  INPUT pPostalCode    AS CHARACTER,
+                                  INPUT pPhones        AS CHARACTER EXTENT 3):
+        
+        ASSIGN  
+            FirstName     = pFirstName    
+            LastName      = pLastName     
+            JobTitle      = pJobTitle     
+            EmpNum        = pEmpNum       
+            VacationHours = pVacationHours
+            Address       = pAddress      
+            PostalCode    = pPostalCode   
+            Phones        = pPhones.       
         
         RETURN.
 
@@ -88,8 +96,25 @@ CLASS Enterprise.HR.Emp:
      Notes:
     ------------------------------------------------------------------------------*/
 
-    METHOD PUBLIC VOID SetVacationHours( INPUT pJobTitle AS CHARACTER ):
+    METHOD PUBLIC VOID SetVacationHours( INPUT pVacationHours AS INTEGER ):
         
+        ASSIGN 
+            VacationHours = pVacationHours.
+            
+        RETURN.
+
+    END METHOD.
+    
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    METHOD PUBLIC VOID SetJobTitle( INPUT pJobTitle AS CHARACTER ):
+        
+        ASSIGN 
+            JobTitle = pJobTitle.
+            
         RETURN.
 
     END METHOD.
@@ -102,7 +127,17 @@ CLASS Enterprise.HR.Emp:
     METHOD PUBLIC CHARACTER GetInfo(  ):
         
         DEFINE VARIABLE result AS CHARACTER NO-UNDO.
-
+        
+        ASSIGN 
+            result = SUBSTITUTE("&1# Employee Information &7&1  Name: &2.&1  Job title: &3.&1  Adress: &4.&1  Postal Code: &5.&1  Vacation hours: &6.&1  EmpNum: &7.&1  Phones: &8.&1&1",
+                                CHR(10),
+                                GetName(),
+                                JobTitle,
+                                Address,
+                                PostalCode,
+                                VacationHours,
+                                EmpNum,
+                                SUBSTITUTE("&1, &2, &3", Phones[1], Phones[2], Phones[3])). 
         RETURN result.
 
     END METHOD.
@@ -115,7 +150,11 @@ CLASS Enterprise.HR.Emp:
     METHOD PUBLIC CHARACTER GetName(  ):
         
         DEFINE VARIABLE result AS CHARACTER NO-UNDO.
-
+        
+        ASSIGN 
+            result = SUBSTITUTE("&1 &2",
+                                FirstName,
+                                LastName).
         RETURN result.
 
     END METHOD.

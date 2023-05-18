@@ -44,6 +44,11 @@ CLASS Enterprise.HR.Dept:
                              INPUT pExpenseCode AS CHARACTER):
         SUPER ().
         
+        ASSIGN 
+            DeptName    = pDeptName   
+            DeptCode    = pDeptCode   
+            ExpenseCode = pExpenseCode.
+        
     END CONSTRUCTOR.
 
     /*------------------------------------------------------------------------------
@@ -52,7 +57,15 @@ CLASS Enterprise.HR.Dept:
     ------------------------------------------------------------------------------*/
 
     METHOD PUBLIC VOID AddEmployee(INPUT pEmployee AS Emp):
+
+        CREATE ttEmployee.
+        ASSIGN 
+            ttEmployee.EmpRef    = pEmployee
+            ttEmployee.FirstName = pEmployee:FirstName
+            ttEmployee.LastName  = pEmployee:LastName.
         
+        NumEmployees = NumEmployees + 1.
+            
         RETURN.
 
     END METHOD.
@@ -66,6 +79,19 @@ CLASS Enterprise.HR.Dept:
                                    INPUT pPostalCode    AS CHARACTER,
                                    INPUT pPhones        AS CHARACTER EXTENT 3):
         
+        DEFINE VARIABLE Empl AS Emp NO-UNDO.
+
+        Empl = NEW Emp().     
+        Empl:Initialize(pFirstName, pLastName, pJobTitle, pEmpNum, pVacationHours, pAddress, pPostalCode, pPhones).
+        
+        CREATE ttEmployee.
+        ASSIGN 
+            ttEmployee.EmpRef    = Empl
+            ttEmployee.FirstName = Empl:FirstName
+            ttEmployee.LastName  = Empl:LastName.
+        
+        NumEmployees = NumEmployees + 1.
+            
         RETURN.
 
     END METHOD.
@@ -78,7 +104,20 @@ CLASS Enterprise.HR.Dept:
     METHOD PUBLIC Emp GetEmployee(INPUT pFirstName     AS CHARACTER,
                                   INPUT pLastName      AS CHARACTER):
         
-        RETURN ?.
+        DEFINE VARIABLE EmpRef AS Emp NO-UNDO.
+        
+        FIND FIRST ttEmployee NO-LOCK
+             WHERE ttEmployee.FirstName = pFirstName
+               AND ttEmployee.LastName  = pLastName 
+             NO-ERROR.
+        
+        IF AVAILABLE ttEmployee 
+        THEN 
+            EmpRef = CAST (ttEmployee.EmpRef, Emp).
+        ELSE 
+            EmpRef = ?.
+            
+        RETURN EmpRef.
 
     END METHOD.
 
@@ -95,7 +134,10 @@ CLASS Enterprise.HR.Dept:
     END METHOD.
     
     DESTRUCTOR PUBLIC Dept ( ):
-
+        FOR EACH ttEmployee:
+            DELETE OBJECT CAST(ttEmployee.EmpRef, Emp).
+            DELETE ttEmployee.
+        END.
     END DESTRUCTOR.
 
 END CLASS.

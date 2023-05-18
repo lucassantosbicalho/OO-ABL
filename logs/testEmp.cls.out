@@ -1,0 +1,40 @@
+# Emp.cls test -  05/18/23 05:58:13 
+
+## Test GetInfo()
+
+# Employee Information 123
+  Name: Lucas Bicalho.
+  Job title: Developer.
+  Adress: Street 54, 38.
+  Postal Code: 74000-000.
+  Vacation hours: 99.
+  EmpNum: 123.
+  Phones: 1234-5678, 1234-5679, 1234-5680.
+
+
+
+## Test SetVacationHours(50)
+
+# Employee Information 123
+  Name: Lucas Bicalho.
+  Job title: Developer.
+  Adress: Street 54, 38.
+  Postal Code: 74000-000.
+  Vacation hours: 50.
+  EmpNum: 123.
+  Phones: 1234-5678, 1234-5679, 1234-5680.
+
+
+
+## Test SetJobTitle('QA Tester')
+
+# Employee Information 123
+  Name: Lucas Bicalho.
+  Job title: QA Tester.
+  Adress: Street 54, 38.
+  Postal Code: 74000-000.
+  Vacation hours: 50.
+  EmpNum: 123.
+  Phones: 1234-5678, 1234-5679, 1234-5680.
+
+
